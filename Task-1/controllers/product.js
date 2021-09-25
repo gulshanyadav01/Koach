@@ -7,25 +7,24 @@ const Seller = require("../model/Seller");
 // Desc : end point for creating the product 
 exports.addProduct  = async (req, res) => {
 
-    const { name, price, description, color} = req.body; 
-    // seller = "614f35fd4f29de114530997e"
-    // let seller; 
+    const { name, price, description, seller,  color} = req.body; 
+     
 
     try{
         const product = new Product({
             name,
             price,
             description,
-            seller:"614f407d1e9f809d65100012",
+            seller,
             color
         }); 
 
-        const  seller = await Seller.findOne({_id : "614f407d1e9f809d65100012"});
+        const  newSeller = await Seller.findOne({_id :seller});
          
         
         await product.save();
-        seller.products.push(product); 
-        await seller.save(); 
+        newSeller.products.push(product); 
+        await newSeller.save(); 
         // return res.json(seller);
         return res.json(product); 
 
@@ -42,7 +41,8 @@ exports.addProduct  = async (req, res) => {
 
 exports.getProducts = async (req, res) => {
     try{
-        const products = await Product.find(); 
+        const products = await Product.find().populate('seller',["name","email","address"]); 
+
         if(!products){
             return res.json({message : "no product available"}); 
         }
@@ -72,7 +72,7 @@ exports.getProductById = async (req, res) => {
         }
 
         const product = await Product.findOne({_id: productId}).populate("seller",["name", "email", "address"]);
-         
+
         if(!product){
             return res.json({message: "product doesn't exist"}); 
         }
@@ -84,3 +84,11 @@ exports.getProductById = async (req, res) => {
     }
 
 }
+
+
+// Update The Product
+// put Method
+// @/api/put-method/:id
+// find the product by id and update
+
+
