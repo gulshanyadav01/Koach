@@ -25,8 +25,9 @@ const productSchema = new Schema({
     },
 
     seller: {
-        type: String, 
-        required: true    
+        
+            type:mongoose.Schema.Types.ObjectId, 
+            ref:"Seller",    
     }
 },
 { 

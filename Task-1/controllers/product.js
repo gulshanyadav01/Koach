@@ -1,4 +1,5 @@
 const Product = require("../model/Product"); 
+const Seller = require("../model/Seller"); 
 
 // create Product
 // Post : method
@@ -6,18 +7,26 @@ const Product = require("../model/Product");
 // Desc : end point for creating the product 
 exports.addProduct  = async (req, res) => {
 
-    const { name, price, description, seller, color} = req.body; 
+    const { name, price, description, color} = req.body; 
+    // seller = "614f35fd4f29de114530997e"
+    // let seller; 
 
     try{
         const product = new Product({
             name,
             price,
             description,
-            seller, 
+            seller:"614f407d1e9f809d65100012",
             color
         }); 
 
+        const  seller = await Seller.findOne({_id : "614f407d1e9f809d65100012"});
+         
+        
         await product.save();
+        seller.products.push(product); 
+        await seller.save(); 
+        // return res.json(seller);
         return res.json(product); 
 
     }catch(err){
@@ -62,7 +71,8 @@ exports.getProductById = async (req, res) => {
             return res.json({message: "please provide correct url"}); 
         }
 
-        const product = await Product.findOne({_id: productId});
+        const product = await Product.findOne({_id: productId}).populate("seller",["name", "email", "address"]);
+         
         if(!product){
             return res.json({message: "product doesn't exist"}); 
         }

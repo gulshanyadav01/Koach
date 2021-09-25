@@ -17,15 +17,21 @@ mongoose.connect("mongodb+srv://gulshan:Tzd8Rx20iYBRgyFG@cluster0.pzhj1.mongodb.
     useUnifiedTopology: true,
     
 }).then(() => {
-    console.log("database connected"); 
+    console.log("database is connected")
+})
+.then(() => {
+
+    app.listen(5000, () => {
+
+        console.log("app is running"); 
+    
+    }) 
 })
 
-const router  = require("./routes/product.js"); 
+const productRouter  = require("./routes/product.js"); 
+const sellerRouter  = require("./routes/seller.js"); 
 
-app.use(router); 
 
-app.listen(5000, () => {
+app.use(productRouter); 
+app.use(sellerRouter); 
 
-    console.log("app is running"); 
-
-})
