@@ -1,0 +1,23 @@
+{
+  "name": "koach",
+  "version": "1.0.0",
+  "description": "This is assignment given by koach ",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "gulshanyadav01"
+  },
+  "author": "gulshanyadav01",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.7",
+    "nodemon": "^2.0.13"
+  }
+}
