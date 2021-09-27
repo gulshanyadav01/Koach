@@ -83,12 +83,36 @@ exports.getProductById = async (req, res) => {
         console.log(err);
     }
 
-}
+} 
 
 
 // Update The Product
 // put Method
-// @/api/put-method/:id
-// find the product by id and update
+// @/api/update-product/:id
+// find the product by id and Update 
+exports.putExperience = async(req, res, next) => { 
+   
+    const { name, price, description, seller,  color} = req.body;
+    
+    try {
+       const product =  await Product.findOne({_id: req.params.id});
+       
+       if(product){
+
+       }
+        
+       await profile.save();
+       return res.status(201).json(profile);
+
+        
+    } catch (error) {
+        // console.log(error.message); 
+        return res.status(500).send('server error');
+        
+    }
+
+}
+
+
 
 
