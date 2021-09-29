@@ -2,7 +2,7 @@ const express = require("express");
 const app = express(); 
 const http = require('http').createServer(app)
 
-const PORT = 5500; 
+const PORT = 5000; 
 
 http.listen(PORT, () => {
     console.log(`listening on port ${PORT}`); 
@@ -12,7 +12,7 @@ http.listen(PORT, () => {
 app.use(express.static(__dirname + "/public"))
 
 app.get("/", (req, res) => {
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirnsame + '/index.html');
 })
 
 // socket set up 

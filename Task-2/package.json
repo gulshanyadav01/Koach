@@ -5,12 +5,13 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev":"nodemon server"
+    "dev": "nodemon server"
   },
   "author": "gulshanyadav01",
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.1",
-    "nodemon": "^2.0.13"
+    "nodemon": "^2.0.13",
+    "socket.io": "^4.2.0"
   }
 }
