@@ -1,10 +1,10 @@
-const express = require("express"); 
-
+const express = require("express");
 const app = express(); 
+const http = require('http').createServer(app)
 
-const PORT = 5000; 
+const PORT = 5500; 
 
-app.listen(PORT, () => {
+http.listen(PORT, () => {
     console.log(`listening on port ${PORT}`); 
 
 })
@@ -14,3 +14,15 @@ app.use(express.static(__dirname + "/public"))
 app.get("/", (req, res) => {
     res.sendFile(__dirname + '/index.html');
 })
+
+// socket set up 
+
+const io = require("socket.io")(http);
+
+io.on("connection", (socket) =>{
+    console.log("connected"); 
+    socket.on("message", (msg) => {
+        socket.broadcast.emit('message', msg);  
+    })
+})
+
