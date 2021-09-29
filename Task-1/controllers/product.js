@@ -58,14 +58,13 @@ exports.getProducts = async (req, res) => {
 // Get Method
 // @/api/get-product/:id
 // get product by id 
-
 exports.getProductById = async (req, res) => {
 
     // get the product id which is pass in url. 
     
     try{
 
-        const productId = req.params.id
+        const productId = req.params.id; 
         if(!productId){
 
             return res.json({message: "please provide correct url"}); 
@@ -86,30 +85,48 @@ exports.getProductById = async (req, res) => {
 } 
 
 
+
 // Update The Product
 // put Method
 // @/api/update-product/:id
 // find the product by id and Update 
-exports.putExperience = async(req, res, next) => { 
-   
-    const { name, price, description, seller,  color} = req.body;
+
+
+
+exports.updateProduct = async (req, res) =>{
     
-    try {
-       const product =  await Product.findOne({_id: req.params.id});
-       
-       if(product){
+    const {name, price, description, seller,  color} = req.body; 
+    const productId = (req.params.id);
+    
+    
+    // build profile object; 
 
-       }
+    const productFields = {};
+    productFields.name = name; 
+    productFields.price = price; 
+    productFields.description = description; 
+    productFields.seller = seller; 
+    productFields.color = color; 
+    
+    try{
+        let product = await Product.findOne({_id:productId});
         
-       await profile.save();
-       return res.status(201).json(profile);
+        if(product){
+            // update 
+            product = await Product.findOneAndUpdate({_id: productId}, {$set:productFields}, {new: true});
+           return res.status(200).json(product); 
+        }
+        // create a new one 
+        // profile = new Profile(profileFields); 
+        // await profile.save(); 
+        // return res.status(200).json(profile); 
 
-        
-    } catch (error) {
-        // console.log(error.message); 
-        return res.status(500).send('server error');
-        
+
+    }catch(err) {
+        console.log(err);
+        return res.status(500).send("server error");
     }
+
 
 }
 
